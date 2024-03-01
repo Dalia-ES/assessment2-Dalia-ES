@@ -43,7 +43,8 @@ spotify
 
 #Changes row values 0 and 1 to major or minor
 spotify <- spotify %>% mutate(mode=gsub("1", "major", mode),
-                   mode=gsub("0", "minor", mode))
+                   mode=gsub("0", "minor", mode),
+                   mode=gsub("A", "", mode))
 spotify
 
 #Renaming track_name column
