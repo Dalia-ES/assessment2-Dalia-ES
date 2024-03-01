@@ -22,7 +22,8 @@ colnames(spotify)[1:ncol(spotify)]
 
 #Reshape spotify dataset using pivot_longer, creating a new column called playlist_genre
 spotify <- spotify %>% pivot_longer(cols = c("pop","rap","rock","r.b","edm"),
-             names_to="playlist_genre")
+             names_to="playlist_genre",
+             values_to="playlist_subgenre")
 spotify
 
 #Separating danceability and energy into two columns
