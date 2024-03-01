@@ -24,3 +24,30 @@ colnames(spotify)[1:ncol(spotify)]
 spotify <- spotify %>% pivot_longer(cols = c("pop","rap","rock","r.b","edm"),
              names_to="playlist_genre")
 spotify
+
+#Finding misspelled artist names
+unique_artists <- unique(spotify$track_artist)
+shakira <- grep("^Sh",
+                unique_artists,
+                ignore.case=T)
+unique_artists[shakira]
+
+taylor_swift <- grep("^Ta",
+                unique_artists,
+                ignore.case=T)
+unique_artists[taylor_swift]
+
+janis_joplin <- grep("^Ja",
+                     unique_artists,
+                     ignore.case=T)
+unique_artists[janis_joplin]
+
+the_four_owls <- grep("^Th",
+                     unique_artists,
+                     ignore.case=T)
+unique_artists[the_four_owls]
+
+bad_bunny <- grep("^Ba",
+                      unique_artists,
+                      ignore.case=T)
+unique_artists[bad_bunny]
