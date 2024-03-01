@@ -30,6 +30,10 @@ spotify <- spotify %>%
   separate_wider_delim("danceability.energy", "_", names=c("danceability", "energy"))
 spotify
 
+#Renaming track_name column
+spotify <- spotify %>% rename(c(track_name=ZZtrack_name89))
+spotify
+
 #Finding misspelled artist names
 unique_artists <- unique(spotify$track_artist)
 shakira <- grep("^Sh",
