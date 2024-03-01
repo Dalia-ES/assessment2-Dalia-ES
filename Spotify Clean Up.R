@@ -31,9 +31,22 @@ spotify <- spotify %>%
   separate_wider_delim("danceability.energy", "_", names=c("danceability", "energy"))
 spotify
 
+#Adjusts columns to numeric
+spotify <- spotify %>%
+  mutate(across(c(danceability,energy),as.numeric))
+spotify
+
+#Changes row values 0 and 1 to major or minor
+spotify <- spotify %>% mutate(mode=gsub("1", "major", mode),
+                   mode=gsub("0", "minor", mode))
+spotify
+
 #Renaming track_name column
 spotify <- spotify %>% rename(c(track_name=ZZtrack_name89))
 spotify
+
+#Finds unique playlist names
+unique_playlist_names <- unique(spotify$playlist_name)
 
 #Finding misspelled artist names
 unique_artists <- unique(spotify$track_artist)
