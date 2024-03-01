@@ -25,6 +25,11 @@ spotify <- spotify %>% pivot_longer(cols = c("pop","rap","rock","r.b","edm"),
              names_to="playlist_genre")
 spotify
 
+#Separating danceability and energy into two columns
+spotify <- spotify %>%
+  separate_wider_delim("danceability.energy", "_", names=c("danceability", "energy"))
+spotify
+
 #Finding misspelled artist names
 unique_artists <- unique(spotify$track_artist)
 shakira <- grep("^Sh",
