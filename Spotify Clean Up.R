@@ -27,7 +27,7 @@ spotify <- spotify %>% pivot_longer(cols = c("pop","rap","rock","r.b","edm"),
              values_to="playlist_subgenre")
 spotify
 
-#Fills playlist_subgenre rows
+#Fills playlist_subgenre column
 spotify <- spotify %>% fill(playlist_subgenre)
 spotify
 
@@ -57,6 +57,8 @@ spotify %>%
 
 
 
+
+#Finds unique playlist subgenres
 unique_playlist_subgenres <- unique(spotify$playlist_subgenre)
 
 #Finds unique playlist names
@@ -73,6 +75,10 @@ taylor_swift <- grep("^Ta",
                 unique_artists,
                 ignore.case=T)
 unique_artists[taylor_swift]
+
+#Correcting Taylor Swift misspelling
+spotify <- spotify %>% mutate(track_artist=gsub("Tailor Swift", "Taylor Swift", track_artist))
+spotify
 
 janis_joplin <- grep("^Ja",
                      unique_artists,
