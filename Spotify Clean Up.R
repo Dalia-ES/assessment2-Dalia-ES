@@ -41,7 +41,6 @@ spotify <- spotify %>%
   mutate(across(c(danceability,energy),as.numeric))
 spotify
 
-
 #Changes row values 0 and 1 to major or minor
 spotify <- spotify %>% mutate(mode=gsub("1", "major", mode),
                    mode=gsub("0", "minor", mode),
@@ -55,8 +54,12 @@ spotify
 spotify %>%
   pivot_longer(cols=starts_with("playlist"), names_to = "playlist", values_to = "danceability", names_repair = "universal")
 
-
-
+#Searching for all NA rows in track_id column
+missing_track_ids <- spotify %>%
+  filter(is.na(track_id)) %>%
+  select(track_name, track_id)
+missing_track_ids
+unique(missing_track_ids)
 
 #Finds unique playlist subgenres
 unique_playlist_subgenres <- unique(spotify$playlist_subgenre)
