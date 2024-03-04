@@ -41,6 +41,7 @@ spotify <- spotify %>%
   mutate(across(c(danceability,energy),as.numeric))
 spotify
 
+
 #Changes row values 0 and 1 to major or minor
 spotify <- spotify %>% mutate(mode=gsub("1", "major", mode),
                    mode=gsub("0", "minor", mode),
@@ -50,6 +51,13 @@ spotify
 #Renaming track_name column
 spotify <- spotify %>% rename(c(track_name=ZZtrack_name89))
 spotify
+
+spotify %>%
+  pivot_longer(cols=starts_with("playlist"), names_to = "playlist", values_to = "danceability", names_repair = "universal")
+
+
+
+unique_playlist_subgenres <- unique(spotify$playlist_subgenre)
 
 #Finds unique playlist names
 unique_playlist_names <- unique(spotify$playlist_name)
@@ -80,3 +88,5 @@ bad_bunny <- grep("^Ba",
                       unique_artists,
                       ignore.case=T)
 unique_artists[bad_bunny]
+
+sessionInfo()
