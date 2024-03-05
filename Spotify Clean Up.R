@@ -54,12 +54,18 @@ spotify
 spotify %>%
   pivot_longer(cols=starts_with("playlist"), names_to = "playlist", values_to = "danceability", names_repair = "universal")
 
-#Searching for all NA rows in track_id column
-missing_track_ids <- spotify %>%
-  filter(is.na(track_id)) %>%
-  select(track_name, track_id)
-missing_track_ids
-unique(missing_track_ids)
+#Searching for all NA values
+na_values <- spotify %>%
+  filter(if_any(everything(), is.na))
+na_values
+View(na_values)
+
+#Calculating mean danceability for each playlist
+spotify <- spotify %>%
+  group_by(playlist_name) %>%
+  mutate(mean_danceability=round(mean(danceability,na.rm=T), digits=3)) %>%
+  ungroup()
+spotify
 
 #Finds unique playlist subgenres
 unique_playlist_subgenres <- unique(spotify$playlist_subgenre)
