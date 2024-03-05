@@ -6,7 +6,7 @@ install.packages("dplyr")
 library(tidyr) #Package for data tidying and reshaping
 library(dplyr) #Package for data manipulation and transformation
 
-#Read Spotify text file into a data frame labelled spotify
+#Read Spotify text file into a data frame called spotify
 spotify <- read.table("Spotify_Messy_200034287.txt",
                       sep="\t",
                       header=T,
@@ -22,42 +22,34 @@ View(spotify)
 colnames(spotify)[1:ncol(spotify)]
 
 #Reshape spotify dataset using pivot_longer, creating a new column called playlist_genre
-spotify <- spotify %>% pivot_longer(cols = c("pop","rap","rock","r.b","edm"),
-             names_to="playlist_genre",
-             values_to="playlist_subgenre")
-spotify
+spotify <- spotify %>%
+  pivot_longer(cols = c("pop","rap","rock","r.b","edm"),
+               names_to="playlist_genre",
+               values_to="playlist_subgenre")
 
 #Fills playlist_subgenre column
-spotify <- spotify %>% fill(playlist_subgenre)
-spotify
+spotify <- spotify %>%
+  fill(playlist_subgenre)
 
 #Separating danceability and energy into two columns
 spotify <- spotify %>%
   separate_wider_delim("danceability.energy", "_", names=c("danceability", "energy"))
-spotify
 
 #Adjusts columns to numeric
 spotify <- spotify %>%
   mutate(across(c(danceability,energy),as.numeric))
-spotify
 
 #Changes row values 0 and 1 to major or minor
-spotify <- spotify %>% mutate(mode=gsub("1", "major", mode),
-                   mode=gsub("0", "minor", mode),
-                   mode=gsub("A", "", mode))
-spotify
+spotify <- spotify %>%
+  mutate(mode=gsub("1", "major", mode),
+         mode=gsub("0", "minor", mode),
+         mode=gsub("A", "", mode))
 
 #Renaming track_name column
-spotify <- spotify %>% rename(c(track_name=ZZtrack_name89))
-spotify
-
-#Renaming tempo column
-spotify <- spotify %>% rename(c(tempo_bpm=tempo))
-spotify
-
-#Renaming loudness column
-spotify <- spotify %>% rename(c(loudness_db=loudness))
-spotify
+spotify <- spotify %>%
+  rename(c(track_name=ZZtrack_name89,
+           tempo_bpm=tempo,
+           loudness_db=loudness))
 
 #Searching for all NA values
 na_values <- spotify %>%
@@ -82,8 +74,8 @@ unique_playlist_names <- unique(spotify$playlist_name)
 unique_track_album_release_date <- unique(spotify$track_album_release_date)
 
 #Removes the year 3000 from track album dates
-spotify <- spotify %>% mutate(track_album_release_date=gsub("3000-", "", track_album_release_date))
-spotify
+spotify <- spotify %>%
+  mutate(track_album_release_date=gsub("3000-", "", track_album_release_date))
 
 #Finding misspelled artist names
 unique_artists <- unique(spotify$track_artist)
