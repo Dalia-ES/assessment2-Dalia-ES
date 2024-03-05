@@ -51,8 +51,13 @@ spotify
 spotify <- spotify %>% rename(c(track_name=ZZtrack_name89))
 spotify
 
-spotify %>%
-  pivot_longer(cols=starts_with("playlist"), names_to = "playlist", values_to = "danceability", names_repair = "universal")
+#Renaming tempo column
+spotify <- spotify %>% rename(c(tempo_bpm=tempo))
+spotify
+
+#Renaming loudness column
+spotify <- spotify %>% rename(c(loudness_db=loudness))
+spotify
 
 #Searching for all NA values
 na_values <- spotify %>%
