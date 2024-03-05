@@ -78,6 +78,13 @@ unique_playlist_subgenres <- unique(spotify$playlist_subgenre)
 #Finds unique playlist names
 unique_playlist_names <- unique(spotify$playlist_name)
 
+#Finds unique track album dates
+unique_track_album_release_date <- unique(spotify$track_album_release_date)
+
+#Removes the year 3000 from track album dates
+spotify <- spotify %>% mutate(track_album_release_date=gsub("3000-", "", track_album_release_date))
+spotify
+
 #Finding misspelled artist names
 unique_artists <- unique(spotify$track_artist)
 shakira <- grep("^Sh",
