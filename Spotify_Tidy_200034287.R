@@ -18,14 +18,14 @@ spotify <- read.table("Spotify_Messy_200034287.txt", #Read Spotify text file dat
   mutate(mode = gsub("1", "major", mode), #Replace values "1" with "major" within the "mode" column
          mode = gsub("0", "minor", mode), #Replace values "0" with "minor" within the "mode" column
          mode = gsub("A", "", mode)) %>% #Remove values "A" from the "mode" column
+  mutate(track_album_release_date = gsub("3000-", "", track_album_release_date)) %>% #Remove values "3000-" from the "track_album_release_date" column
+  mutate(track_artist = gsub("Tailor Swift", "Taylor Swift", track_artist)) %>% #Replace values "Tailor Swift" with "Taylor Swift" within the "track_artist" column
   separate_wider_delim("danceability.energy", "_", names = c("danceability", "energy")) %>% #Separate "danceability.energy" column into "danceability" and "energy"
   mutate(across(c(danceability, energy), as.numeric)) %>% #Change values to numeric within the "danceability" and "energy" columns
   group_by(playlist_name) %>% #Group the data by "playlist_name" column values
   mutate(mean_danceability = round(mean(danceability, na.rm = T), digits = 3)) %>% #Calculate mean danceability, creating a new column called "mean_danceability", and rounding the vales to 3 decimal points
   ungroup() %>% #Ungroup the data
-  select(track_id, track_name, track_artist, track_popularity, track_album_id, track_album_name, track_album_release_date, playlist_name, playlist_id, playlist_genre, playlist_subgenre, danceability, mean_danceability, energy, key, loudness_db, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo_bpm, duration_ms) %>% #Change order of columns
-  mutate(track_album_release_date = gsub("3000-", "", track_album_release_date)) %>% #Remove values "3000-" from the "track_album_release_date" column
-  mutate(track_artist = gsub("Tailor Swift", "Taylor Swift", track_artist)) #Replace values "Tailor Swift" with "Taylor Swift" within the "track_artist" column
+  select(track_id, track_name, track_artist, track_popularity, track_album_id, track_album_name, track_album_release_date, playlist_name, playlist_id, playlist_genre, playlist_subgenre, danceability, mean_danceability, energy, key, loudness_db, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo_bpm, duration_ms) #Change order of columns
 
 #Export tidy Spotify data
 write.table(spotify, "Spotify_Tidy_200034287.txt", sep = "\t", row.names = FALSE) #Export tidy data
