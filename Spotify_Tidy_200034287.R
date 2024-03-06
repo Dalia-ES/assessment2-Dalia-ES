@@ -26,7 +26,14 @@ spotify <- read.table("Spotify_Messy_200034287.txt", #Read Spotify text file dat
   select(track_id, track_name, track_artist, track_popularity, track_album_id, track_album_name, track_album_release_date, playlist_name, playlist_id, playlist_genre, playlist_subgenre, danceability, mean_danceability, energy, key, loudness_db, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo_bpm, duration_ms) %>% #Change order of columns
   mutate(track_album_release_date = gsub("3000-", "", track_album_release_date)) %>% #Remove values "3000-" from the "track_album_release_date" column
   mutate(track_artist = gsub("Tailor Swift", "Taylor Swift", track_artist)) #Replace values "Tailor Swift" with "Taylor Swift" within the "track_artist" column
-View(spotify) #Table representation of "spotify" data frame
+
+#Export tidy Spotify data
+write.table(spotify, "Spotify_Tidy_200034287.txt", sep = "\t", row.names = FALSE) #Export tidy data
+spotify_tidy <- read.table("Spotify_Tidy_200034287.txt", #Read tidy spotify text file data into a data frame called "spotify_tidy"
+                      sep = "\t", #Separate values by tabs
+                      header = T, #Include a header line
+                      na.strings = c("NA")) #Treat "NA" strings as missing values
+View(spotify_tidy) #Table representation of "spotify_tidy" data frame
 
 #Data analysing
 str(spotify) #View internal structure of data frame
