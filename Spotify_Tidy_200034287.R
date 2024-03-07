@@ -3,7 +3,7 @@ install.packages(c("tidyr", "dplyr"))
 library(tidyr) #Package for data tidying and reshaping
 library(dplyr) #Package for data manipulation
 
-#Tidy and reshape Spotify data
+#Tidy and reshape messy Spotify data
 spotify <- read.table("Spotify_Messy_200034287.txt", #Read Spotify text file data into a data frame called "spotify"
                       sep = "\t", #Separate values by tabs
                       header = T, #Include a header line
